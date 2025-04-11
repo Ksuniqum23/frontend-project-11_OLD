@@ -1,9 +1,13 @@
 1. git clone git@github.com:Ksuniqum23/frontend-project-11.git
 
-2. npm init
-    sudo apt update
+2. sudo apt update
+    sudo apt install npm
+    npm init
     sudo apt install curl
     sudo apt install nodejs
+
+3. git branch develop
+    git checkout develop
 
 3. Code Climate
     curl https://qlty.sh | sh    //это для CodeClimate хз зачем
