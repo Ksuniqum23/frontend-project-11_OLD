@@ -15,5 +15,15 @@
   "bugs": {
     "url": "https://github.com/Ksuniqum23/frontend-project-11/issues"
   },
-  "homepage": "https://github.com/Ksuniqum23/frontend-project-11#readme"
+  "homepage": "https://github.com/Ksuniqum23/frontend-project-11#readme",
+  "devDependencies": {
+    "@eslint/css": "^0.6.0",
+    "@eslint/json": "^0.11.0",
+    "@eslint/markdown": "^6.3.0",
+    "eslint": "^9.24.0",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3"
+  }
 }
