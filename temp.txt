@@ -13,6 +13,7 @@
     curl https://qlty.sh | sh    //это для CodeClimate хз зачем
     Code Climate больше нет.
     3.1 main.yml
+    хххххххххххххххххххххх
 
 5. ES Lint
     npm install eslint prettier eslint-config-prettier eslint-plugin-prettier --save-dev
@@ -20,6 +21,11 @@
 
     npx eslint .
     npx eslint . --fix
+
+    чтоб запускался npm run lint, надо в package.json добавить скрипт:
+        "scripts": {
+          "lint": "eslint ."
+        }
 
 6. Бандлы
     npm publish --dry-run
