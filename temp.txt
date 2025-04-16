@@ -52,3 +52,22 @@
 8. BOOTSTRAP
     npm install bootstrap
     импортировать в index.js
+    import 'bootstrap/dist/css/bootstrap.min.css'; // стили Bootstrap в файле index.js
+
+9. WEBPACK Server
+    npm install --save-dev webpack-dev-server
+    Обновить конфиг, добавить туда секцию про devServer
+
+    Обновить package.json
+    "scripts": {
+      "start": "webpack serve --mode development",
+      "build": "webpack --mode production"
+    }
+
+    Webpack Dev Server по умолчанию не следит за index.html, если он не в src/
+    поэтому:
+         watchFiles: ['index.html'], // <=== вот это добавь
+
+    rm -rf dist - удалить старую сборку
+    npm run dev
+    rm -rf node_modules/.cache - перезапуск с чистого состояния

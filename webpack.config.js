@@ -19,10 +19,29 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './index.html', // HTML-шаблон
+            // template: 'index.html', // HTML-шаблон
+            template: path.resolve(__dirname, 'index.html'),
             filename: 'index.html',   // имя итогового файла
             inject: 'body',           // подключать скрипты перед </body>
         }),
     ],
     mode: 'development', // Или 'production' для финальной сборки
+    devServer: {
+        allowedHosts: 'auto',
+        static: {
+            directory: path.resolve(__dirname), // пусть следит за всем проектом
+            watch: true,
+        },
+        compress: true,      // сжатие
+        port: 3000,           // любой свободный порт
+        open: true,           // откроет браузер автоматически
+        hot: true,            // обновляет только изменённые модули
+        liveReload: true,
+        watchFiles: {
+            paths: [path.resolve(__dirname, 'index.html')],
+            options: {
+                usePolling: true,
+            },
+        }
+    },
 };
