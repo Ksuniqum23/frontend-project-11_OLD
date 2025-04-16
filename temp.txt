@@ -28,4 +28,27 @@
         }
 
 6. Бандлы
-    npm publish --dry-run
+    создала файл lint.yml, связала результат выполнения через бейдж
+
+7. WEBPACK
+    npm install --save-dev webpack
+    npm install --save-dev webpack-cli  //чтоб вызывать из командной строки
+    подготовить структуру проекта (src, dist, webpack.config.js)
+
+    установка загрузчиков и плагинов:
+    npm install --save-dev style-loader css-loader html-webpack-plugin
+            css-loader — позволяет Webpack читать CSS.
+            style-loader — встраивает CSS в <style> в HTML.
+            html-webpack-plugin — создаёт итоговый HTML-файл и автоматически подключает bundle.js.
+
+    Добавление npm-скриптов
+        "scripts": {
+          "build": "webpack",
+          "start": "webpack serve --open"
+        }
+
+    npm run build — собрать проект.
+
+8. BOOTSTRAP
+    npm install bootstrap
+    импортировать в index.js
