@@ -71,3 +71,27 @@
     rm -rf dist - удалить старую сборку
     npm run dev
     rm -rf node_modules/.cache - перезапуск с чистого состояния
+
+10. Работа под WSL:
+    git --version (или установить)
+    ssh-keygen -t ed25519 -C "kalyakina.ks.a@gmail.com"      //сгенерим ключ
+    eval "$(ssh-agent -s)"      //Эта команда запустит ssh-agent в фоне и установит переменные окружения, необходимые для работы агента.
+    ssh-add ~/.ssh/id_ed25519   //Добавить приватный ключ в агент
+    ssh-add -l      //проверка
+    cd /mnt/d   //попадаю в файловую систему виднды, диск Д
+
+    Клонирую репу
+    git checkout develop
+    npm install
+
+11. QLTY
+    sudo apt update
+    sudo apt install python3 python3-pip  //необходимо для работы
+    pip install qlty  //не сработал
+    sudo apt install python3-qlty
+
+    ?!не доделала
+
+12. VERSEL
+    npm install -g vercel
+    sudo npm install -g vercel  гыыыы

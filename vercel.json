@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "dist/bundle.js",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
