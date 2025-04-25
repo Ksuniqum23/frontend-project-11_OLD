@@ -7,7 +7,7 @@ function helloWorld() {
     newLi.className = 'list-group-item';
     newLi.textContent = 'Hello, Webpack!';
     ul.appendChild(newLi);
-    console.log('Hello from Webpack!');
+    console.log('Hello from Webpack! v2!');
 }
 
 helloWorld();
