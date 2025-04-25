@@ -1,5 +1,6 @@
 import '../css/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; // стили Bootstrap
+import './view';
 
 function helloWorld() {
     const ul = document.getElementById('result');
