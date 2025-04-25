@@ -95,3 +95,8 @@
 12. VERSEL
     npm install -g vercel
     sudo npm install -g vercel  гыыыы
+
+13. push into MAIN
+    git checkout main
+    git merge develop
+    git push origin main
