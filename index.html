@@ -10,22 +10,28 @@
         <div class="container">
             <h1 class="display-4">RSS-агрегатор</h1>
             <p class="lead">Начните читать RSS сегодня! Это легко, это красиво.</p>
-            <form class="row g-2 align-items-center">
+            <form class="row g-2 align-items-center" id="rss-form">
                 <div class="col">
                     <input
-                            type="url"
-                            class="form-control"
+                            id="rss-input"
+                            autofocus=""
+                            required=""
+                            name="url"
+                            aria-label="url"
+                            class="form-control w-100"
                             placeholder="Введите RSS-ссылку"
-                            id="url-input"
-                            required
-                    >
+                            autocomplete="off">
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-primary">
-                        Добавить
+                    <button
+                            type="submit"
+                            aria-label="add"
+                            class="h-100 btn btn-lg btn-primary px-sm-5">Добавить
                     </button>
                 </div>
             </form>
+            <p class="mt-2 mb-0 text-muted">Пример: https://lorem-rss.hexlet.app/feed</p>
+            <p class="feedback m-0 position-absolute small text-success">Пока нет фидбека</p>
         </div>
     </main>
 
@@ -37,13 +43,19 @@
     <div id="app"></div>
 
     <section class="container">
-        <div class="bg-white border rounded shadow-sm p-4">
-            <h2 class="h5 mb-3">Результат:</h2>
-            <ul class="list-group list-group-flush" id="result">
-                <!-- сюда будут добавляться элементы -->
-                <li class="list-group-item">https://example.com/feed1</li>
-                <li class="list-group-item">https://example.com/feed2</li>
-            </ul>
+        <div class="row gx-4 mx-n2">
+            <div class="bg-white border rounded shadow-sm p-4 col mx-2">
+                <h2 class="h5">Feeds:</h2>
+                <ul class="list-group list-group-flush" id="ulFeeds">
+                    <!-- сюда будут добавляться элементы -->
+                </ul>
+            </div>
+            <div class="bg-white border rounded shadow-sm p-4 col mx-2">
+                <h2 class="h5">Posts:</h2>
+                <ul class="list-group list-group-flush" id="ulPosts">
+                    <!-- сюда будут добавляться элементы -->
+                </ul>
+            </div>
         </div>
     </section>
 <!--    <div class="container mt-5" id="container"></div>-->
