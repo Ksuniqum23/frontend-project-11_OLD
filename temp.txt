@@ -51,8 +51,8 @@
 
 8. BOOTSTRAP
     npm install bootstrap
-    импортировать в index.js
-    import 'bootstrap/dist/css/bootstrap.min.css'; // стили Bootstrap в файле index.js
+    импортировать в i18next.js
+    import 'bootstrap/dist/css/bootstrap.min.css'; // стили Bootstrap в файле i18next.js
 
 9. WEBPACK Server
     npm install --save-dev webpack-dev-server
@@ -103,3 +103,6 @@
 
 14. YUP
     npm install yup
+
+15. i18next
+    npm install i18next

@@ -1,16 +1,18 @@
 import * as Yup from 'yup';
+import i18n from "./i18next";
 
 const validateRss = Yup.object().shape({
     url: Yup.string()
-        .required('Ссылка обязательна')
-        .url('введите корректный URL')
+        .required(i18n.t('errors.required'))
+        .url(i18n.t('errors.invalidUrl'))
+        .test(
+            'rss-already-exists',
+            i18n.t('errors.addRSS'),
+            function (value) {
+                const { feeds } = this.options.context;
+                return !feeds.includes(value);
+            }
+        )
 });
 
 export default validateRss;
-// validationSchema.validate(userInput)
-//     .then(() => {
-//         console.log('Ввод валиден!');
-//     })
-//     .catch(err => {
-//         console.error(err.errors); // Вывод ошибок валидации
-//     });
