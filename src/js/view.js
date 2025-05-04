@@ -9,6 +9,7 @@ form.addEventListener('submit', (event) => {
     const rssInput = document.getElementById('rss-input');
     const rssValue = rssInput.value;
     const feedback = document.querySelector('.feedback');
+    const feeds = document.getElementById('ulFeeds')
 
     validateRss
         .validate({url: rssValue}, { context: {feeds: state.feeds} })
@@ -16,9 +17,14 @@ form.addEventListener('submit', (event) => {
             feedback.textContent = i18n.t('success.addRSS');
             feedback.classList.remove('text-danger');
             feedback.classList.add('text-success');
+            state.feeds.push(rssValue);
+            const li = document.createElement('li');
+            li.classList.add('rss-list-item');
+            li.textContent = rssValue;
+            feeds.appendChild(li);
         })
         .catch(error => {
-            feedback.textContent = i18n.t(`errors.${error.message}`);  // Получаем локализованное сообщение ошибки
+            feedback.textContent = i18n.t(`${error.message}`);  // Получаем локализованное сообщение ошибки
             feedback.classList.remove('text-success');  // Убираем класс успеха
             feedback.classList.add('text-danger');  // Добавляем класс ошибки
         });
