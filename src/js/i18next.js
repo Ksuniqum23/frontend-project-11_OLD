@@ -4,14 +4,15 @@ const resources = {
     ru: {
         translation: {
             success: {
-                addRSS: 'RSS успешно добавлен игигггггогооо',
+                addRSS: 'RSS успешно добавлен',
             },
             errors: {
                 required: 'Ссылка обязательна',
-                addRSS: 'Этот RSS уже добавлен 1231231231',
+                addRSS: 'Этот RSS уже добавлен',
                 invalidUrl: 'Ссылка должна быть валидным URL',
                 invalidRss: 'Ресурс не содержит валидный RSS',
-                // network: 'Ошибка сети. Попробуйте позже.',
+                invalidXml: 'Не могу разобрать XML',
+                network: 'Ошибка сети. Попробуйте позже.',
                 // parsing: 'Ресурс не содержит валидный RSS',
             },
         },

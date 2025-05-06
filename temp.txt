@@ -104,5 +104,6 @@
 14. YUP
     npm install yup
 
-15. i18next
+15. OTHER
     npm install i18next
+    npm install axios

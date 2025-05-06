@@ -13,28 +13,6 @@ const validateRss = Yup.object().shape({
                 return !feeds.includes(value);
             }
         )
-        .test(
-            'is-valid-rss',
-            i18n.t('errors.invalidRss'), // например: "Ссылка не указывает на валидный RSS"
-            async function (value) {
-                if (!value) return true;
-
-                try {
-                    const response = await fetch(value);
-                    console.log('Content-Type!!!:', contentType);
-                    const contentType = response.headers.get('content-type') || '';
-
-                    const isRssContentType =
-                        contentType.includes('application/rss+xml') ||
-                        contentType.includes('application/xml') ||
-                        contentType.includes('text/xml');
-
-                    return response.ok && isRssContentType;
-                } catch (err) {
-                    return false;
-                }
-            }
-        )
 });
 
 export default validateRss;
