@@ -8,6 +8,11 @@
 
 3.  git branch develop
     git checkout develop
+    или git checkout -b develop
+    ..
+    git checkout main
+    git merge develop
+    git push origin main
 
 4. Code Climate --------- пока забила
     curl https://qlty.sh | sh    //это для CodeClimate хз зачем
@@ -51,8 +56,8 @@
 
 8. BOOTSTRAP
     npm install bootstrap
-    импортировать в i18next.js
-    import 'bootstrap/dist/css/bootstrap.min.css'; // стили Bootstrap в файле i18next.js
+    импортировать в i18nex  oldt.js
+    import 'bootstrap/dist/css/bootstrap.min.css'; // стили Bootstrap в файле i18nex  oldt.js
 
 9. WEBPACK Server
     npm install --save-dev webpack-dev-server

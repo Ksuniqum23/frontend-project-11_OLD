@@ -1,13 +1,13 @@
-import * as Yup from 'yup';
-import i18n from "./i18next";
+import * as Yup from "yup";
+import i18n from "../i18n/init.js";
 
-const validateRss = Yup.object().shape({
+const validateURL = Yup.object().shape({
     url: Yup.string()
-        .required(i18n.t('required'))
+        .required(i18n.t('errors.required'))
         .url(i18n.t('errors.invalidUrl'))
         .test(
             'rss-already-exists',
-            i18n.t('addRSS'),
+            i18n.t('errors.addRSS'),
             function (value) {
                 const { feeds } = this.options.context;
                 return !feeds.includes(value);
@@ -15,4 +15,4 @@ const validateRss = Yup.object().shape({
         )
 });
 
-export default validateRss;
+export default validateURL;

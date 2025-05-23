@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // плагин автоматически создает HTML-файл, подключающий ваш собранный JavaScript, и вставляет его в проект
 
 module.exports = {
-    entry: './src/js/index.js', // Точка входа
+    entry: './src/index.js', // Точка входа
     output: {
         path: path.resolve(__dirname, 'dist'), // Куда класть результат
         filename: 'bundle.js', // Имя итогового JS-файла
