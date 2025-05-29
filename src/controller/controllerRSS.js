@@ -6,19 +6,19 @@ import throwIfInvalidRSS from "./validateRSS";
 import {addNewRssInState} from "../state/updateState";
 import {updateFeedback, updateUI} from "../view/render";
 
-const addRSS = (xmlDoc, message, rssValue) => {
-    addNewRssInState(xmlDoc, rssValue);
+const addRSS = (xmlDoc, message, rssLink) => {
+    addNewRssInState(xmlDoc, rssLink);
     updateFeedback(message.type, message.message);
     updateUI(state);
 }
 
-export const submitHandler = (rssValue) => {
-    const message = {
+export const submitHandler = (rssLink) => {
+    const feedbackMessage = {
         type: 'success',
         message: 'success.addRSS',
     }
-    validateURL.validate({url: rssValue}, { context: {feeds: state.links} })
-    .then(() => fetchRSS(rssValue))
+    validateURL.validate({url: rssLink}, { context: {feeds: state.links} })
+    .then(() => fetchRSS(rssLink))
     .then((xmlString) => {
         const xmlDoc = parseXML(xmlString);
         throwIfInvalidRSS(xmlDoc);
@@ -26,11 +26,11 @@ export const submitHandler = (rssValue) => {
         return xmlDoc;
     })
     .then((xmlDoc) => {
-        addRSS(xmlDoc, message, rssValue);
+        addRSS(xmlDoc, feedbackMessage, rssLink);
     })
     .catch(error => {
-        message.type = 'danger';
-        message.message = error.message;
-        updateFeedback(message.type, message.message);
+        feedbackMessage.type = 'danger';
+        feedbackMessage.message = error.message;
+        updateFeedback(feedbackMessage.type, feedbackMessage.message);
     })
 }

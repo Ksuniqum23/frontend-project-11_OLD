@@ -6,32 +6,31 @@ export const updateUI = (state) => {
     feeds.innerHTML = '';
     posts.innerHTML = '';
 
-    state.feeds.forEach(feed => {
+    state.links.forEach(link => {
         const feedTitle = document.createElement('h4');
         const feedDescription = document.createElement('p');
-        feedTitle.textContent = feed.channelTitle;
-        feedDescription.textContent = feed.channelDescription;
+        feedTitle.textContent = state.data[link].feed.title;
+        feedDescription.textContent = state.data[link].feed.description;
         feeds.appendChild(feedTitle);
+
+        state.data[link].posts.forEach(post => {
+            const postLi = document.createElement('li');
+            postLi.classList.add('list-group-item');
+
+            const postLink = document.createElement('a');
+            postLink.href = post.link;
+            postLink.textContent = post.title;
+            postLink.target = '_blank'; // Открывать в новой вкладке
+            postLink.classList.add('text-decoration-none'); // Убираем подчёркивание (опционально)
+
+            const postDescription = document.createElement('p');
+            postDescription.textContent = post.description;
+
+            postLi.appendChild(postLink); // Добавляем ссылку вместо заголовка
+            postLi.appendChild(postDescription);
+            posts.appendChild(postLi);
+        })
     });
-
-    state.posts.forEach(post => {
-        const postLi = document.createElement('li');
-        postLi.classList.add('list-group-item');
-
-        const postLink = document.createElement('a');
-        postLink.href = post.postLink;
-        postLink.textContent = post.postTitle;
-        postLink.target = '_blank'; // Открывать в новой вкладке
-        postLink.classList.add('text-decoration-none'); // Убираем подчёркивание (опционально)
-
-        const postDescription = document.createElement('p');
-        postDescription.textContent = post.postDescription;
-
-        postLi.appendChild(postLink); // Добавляем ссылку вместо заголовка
-        postLi.appendChild(postDescription);
-        posts.appendChild(postLi);
-    })
-
 }
 
 export const updateFeedback = (type, message) => {
