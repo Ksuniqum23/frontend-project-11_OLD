@@ -1,6 +1,13 @@
-import {submitHandler} from "../controller/controllerRSS";
+import {previewBtnHandler, submitHandler} from "../controller/handlers";
+import state from "../state/state";
 
-export default () => {
+const findPost = (postlink) => {
+    state.links.forEach((rss) => {
+        if (state.data[rss].posts) {}
+    })
+}
+export const initListeners = () => {
+    //Add RSS Button:
     const form = document.getElementById('rss-form');
     form.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -8,6 +15,19 @@ export default () => {
         const rssInput = document.getElementById('rss-input');
         const rssValue = rssInput.value;
         submitHandler(rssValue);
+    });
+
+    //Preview post Buttons:
+    const postList = document.getElementById('ulPosts');
+    postList.addEventListener('click', (event) => {
+        console.log('кнопка просмотр!!!');
+        const buttonPostPreview = event.target.closest('button');
+        if (!buttonPostPreview) return;
+        const postLink = buttonPostPreview.dataset.postLink;
+        console.log('state in listener:', state);
+        const currentPost = state.data[postLink];
+        console.log(postLink, currentPost);
+        previewBtnHandler(currentPost);
     });
 }
 

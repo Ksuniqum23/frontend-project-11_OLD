@@ -1,4 +1,5 @@
 import i18n from "../i18n/init";
+import {Modal} from 'bootstrap';
 
 export const updateUI = (state) => {
     const feeds = document.getElementById('ulFeeds');
@@ -14,8 +15,8 @@ export const updateUI = (state) => {
         feeds.appendChild(feedTitle);
 
         state.data[link].posts.forEach(post => {
-            const postLi = document.createElement('li');
-            postLi.classList.add('list-group-item');
+            const postList = document.createElement('li');
+            postList.classList.add('list-group-item', 'd-flex', 'justify-content-between');
 
             const postLink = document.createElement('a');
             postLink.href = post.link;
@@ -23,12 +24,19 @@ export const updateUI = (state) => {
             postLink.target = '_blank'; // Открывать в новой вкладке
             postLink.classList.add('text-decoration-none'); // Убираем подчёркивание (опционально)
 
-            const postDescription = document.createElement('p');
-            postDescription.textContent = post.description;
+            const postButton = document.createElement('button');
+            postButton.classList.add('btn', 'btn-outline-primary', 'btn-sm');
+            postButton.setAttribute('data-post-link', post.link);
+            postButton.textContent = 'Просмотр';
 
-            postLi.appendChild(postLink); // Добавляем ссылку вместо заголовка
-            postLi.appendChild(postDescription);
-            posts.appendChild(postLi);
+            if (state.readPosts.includes(post.link)) {
+                postLink.classList.add('text-muted');
+                postButton.classList.add('disabled');
+            }
+
+            postList.appendChild(postLink); // Добавляем ссылку вместо заголовка
+            postList.appendChild(postButton);
+            posts.appendChild(postList);
         })
     });
 }
@@ -39,3 +47,30 @@ export const updateFeedback = (type, message) => {
     feedback.classList.remove('text-success', 'text-danger');
     feedback.classList.add(`text-${type}`);
 }
+
+export const modalPreviewPost = (post) => {
+    const modalElement = document.getElementById('modalPreviewPost');
+    if (!modalElement || !post) {
+        return;
+    }
+
+    const modal = new Modal(modalElement); // Явное обращение к глобальному объекту
+
+    modalElement.querySelector('#modal-title').textContent = post.title;
+    modalElement.querySelector('#modal-description').textContent = post.description;
+
+    const readMoreBtn = modalElement.querySelector('#btn-read-more');
+    if (readMoreBtn) readMoreBtn.href = post.link;
+
+    modal.show();
+};
+
+// setTimeout(() => {
+//     const modalElement = document.getElementById('modalPreviewPost');
+//     const modal = new Modal(modalElement); // Явное обращение к глобальному объекту
+//
+//     modalElement.querySelector('#modal-title').textContent = '123';
+//     modalElement.querySelector('#modal-description').textContent = 'qweqwewqewqe';
+//
+//     modal.show();
+// }, 2000);

@@ -1,6 +1,7 @@
 const path = require('path'); //Импортирует встроенный модуль Node.js path
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // плагин автоматически создает HTML-файл, подключающий ваш собранный JavaScript, и вставляет его в проект
+// const webpack = require('webpack');
 
 module.exports = {
     entry: './src/index.js', // Точка входа
@@ -24,6 +25,9 @@ module.exports = {
             filename: 'index.html',   // имя итогового файла
             inject: 'body',           // подключать скрипты перед </body>
         }),
+        // new webpack.ProvidePlugin({
+        //     bootstrap: 'bootstrap/dist/js/bootstrap.bundle.min.js',
+        // }),
     ],
     mode: 'development', // Или 'production' для финальной сборки
     devServer: {
@@ -44,4 +48,7 @@ module.exports = {
             },
         }
     },
+    // externals: {
+    //     bootstrap: 'bootstrap'
+    // }
 };

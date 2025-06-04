@@ -1,4 +1,5 @@
 export default {
     links: [],
-    data: {}
+    data: {},
+    readPosts: [],
 };

@@ -3,8 +3,8 @@ import state from "../state/state";
 import fetchRSS from "./fetchRss";
 import parseXML from "./parseRSS";
 import throwIfInvalidRSS from "./validateRSS";
-import {addNewRssInState} from "../state/updateState";
-import {updateFeedback, updateUI} from "../view/render";
+import {addNewRssInState, addReadPost} from "../state/updateState";
+import {modalPreviewPost, updateFeedback, updateUI} from "../view/render";
 
 const addRSS = (xmlDoc, message, rssLink) => {
     addNewRssInState(xmlDoc, rssLink);
@@ -33,4 +33,10 @@ export const submitHandler = (rssLink) => {
         feedbackMessage.message = error.message;
         updateFeedback(feedbackMessage.type, feedbackMessage.message);
     })
+}
+
+export const previewBtnHandler = (currentPost) => {
+    console.log(`currentPost`, currentPost);
+    addReadPost(currentPost);
+    modalPreviewPost(currentPost);
 }

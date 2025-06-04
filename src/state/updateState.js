@@ -10,20 +10,6 @@ const addFeed = (rss, xmlDoc) => {
     };
 }
 
-// const addPosts = (rss, xmlDoc) => {
-//     const posts = xmlDoc.querySelectorAll('item');
-//     posts.forEach(item => {
-//         const postTitle = item.querySelector('title')?.textContent || 'Нет заголовка';
-//         const postDescription = item.querySelector('description').textContent || 'Нет описания';
-//         const postLink = item.querySelector('link').textContent || 'Нет link';
-//         rss.posts.push({
-//             title: postTitle,
-//             description: postDescription,
-//             link: postLink,
-//         });
-//     });
-// }
-
 const addPosts = (rss, xmlDoc) => {
     const existingPosts = new Set(rss.posts.map(post => post.link)); //это объект с уникальными значениями
     const newPosts = [];
@@ -38,6 +24,7 @@ const addPosts = (rss, xmlDoc) => {
             title: postTitle,
             description: postDescription,
             link: postLink,
+            isRead: false,
         });
         }
     )
@@ -60,3 +47,7 @@ export const addNewRssInState = (xmlDoc, rssLink) => {
     addPosts(rss, xmlDoc);
     state.data[rssLink] = rss;
 };
+
+export const addReadPost = (rssLink, postLink) => {
+    watchedState.readPosts.push(postLink);
+}
