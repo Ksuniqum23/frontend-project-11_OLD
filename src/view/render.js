@@ -7,36 +7,38 @@ export const updateUI = (state) => {
     feeds.innerHTML = '';
     posts.innerHTML = '';
 
-    state.links.forEach(link => {
+    state.ui.rssLinksOrder.forEach(rssLink => {
         const feedTitle = document.createElement('h4');
         const feedDescription = document.createElement('p');
-        feedTitle.textContent = state.data[link].feed.title;
-        feedDescription.textContent = state.data[link].feed.description;
+        feedTitle.textContent = state.data.feeds[rssLink].title;
+        feedDescription.textContent = state.data.feeds[rssLink].description;
         feeds.appendChild(feedTitle);
+        feeds.appendChild(feedDescription);
 
-        state.data[link].posts.forEach(post => {
-            const postList = document.createElement('li');
-            postList.classList.add('list-group-item', 'd-flex', 'justify-content-between');
+        state.ui.postsOrder[rssLink].forEach(postItemLink => {
+            const postData = state.data.posts[postItemLink];
+            const postItem = document.createElement('li');
+            postItem.classList.add('list-group-item', 'd-flex', 'justify-content-between');
 
             const postLink = document.createElement('a');
-            postLink.href = post.link;
-            postLink.textContent = post.title;
+            postLink.href = postData.link;
+            postLink.textContent = postData.title;
             postLink.target = '_blank'; // Открывать в новой вкладке
             postLink.classList.add('text-decoration-none'); // Убираем подчёркивание (опционально)
 
             const postButton = document.createElement('button');
             postButton.classList.add('btn', 'btn-outline-primary', 'btn-sm');
-            postButton.setAttribute('data-post-link', post.link);
+            postButton.setAttribute('data-post-link', postData.link);
             postButton.textContent = 'Просмотр';
 
-            if (state.readPosts.includes(post.link)) {
-                postLink.classList.add('text-muted');
-                postButton.classList.add('disabled');
-            }
+            // if (state.ui.readPosts.includes(postData.link)) {
+            //     postLink.classList.add('text-muted');
+            //     postButton.classList.add('disabled');
+            // }
 
-            postList.appendChild(postLink); // Добавляем ссылку вместо заголовка
-            postList.appendChild(postButton);
-            posts.appendChild(postList);
+            postItem.appendChild(postLink); // Добавляем ссылку вместо заголовка
+            postItem.appendChild(postButton);
+            posts.appendChild(postItem);
         })
     });
 }

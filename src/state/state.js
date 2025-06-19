@@ -1,5 +1,11 @@
 export default {
-    links: [],
-    data: {},
-    readPosts: [],
+    data: {
+        feeds: {},
+        posts: {},
+    },
+    ui: {
+        rssLinksOrder: [],
+        postsOrder: {},
+        readPosts: []
+    }
 };

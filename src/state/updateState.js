@@ -1,53 +1,60 @@
 import state from "./state";
 import {watchedState} from "../index";
+import {updateUI} from "../view/render";
 
-const addFeed = (rss, xmlDoc) => {
+const parseFeed = (xmlDoc) => {
     const channelTitle = xmlDoc.querySelector('channel > title')?.textContent || 'Без заголовка';
     const channelDescription = xmlDoc.querySelector('channel > description')?.textContent || 'Без описания';
-    rss.feed = {
+    return {
         title: channelTitle,
         description: channelDescription
     };
 }
 
-const addPosts = (rss, xmlDoc) => {
-    const existingPosts = new Set(rss.posts.map(post => post.link)); //это объект с уникальными значениями
-    const newPosts = [];
+const parsePosts = (xmlDoc) => {
+    const postOrderArr = [];
+    const postsPool = {};
+
     xmlDoc.querySelectorAll('item').forEach(item => {
         const postLink = item.querySelector('link')?.textContent;
-        if (!postLink || existingPosts.has(postLink)) {
+        if (!postLink || state.data.posts[postLink]) {
             return;
         }
-        const postTitle = item.querySelector('title')?.textContent || 'Нет заголовка';
-        const postDescription = item.querySelector('description').textContent || 'Нет описания';
-        newPosts.push({
-            title: postTitle,
-            description: postDescription,
+        postsPool[postLink] = {
+            title: item.querySelector('title')?.textContent || 'Нет заголовка',
+            description: item.querySelector('description').textContent || 'Нет описания',
             link: postLink,
-            isRead: false,
-        });
-        }
-    )
-    rss.posts = [...rss.posts, ...newPosts];
-}
-
-export const updatePosts= (rssLink, xmlDoc) => {
-    const rss = state.data[rssLink] || { feed: 'unknown', posts: [] };
-    addPosts(rss, xmlDoc);
-    watchedState.data[rssLink] = rss;
-}
-
-export const addNewRssInState = (xmlDoc, rssLink) => {
-    state.links.push(rssLink);
-    const rss = {
-        feed: {},
-        posts: [],
-    };
-    addFeed(rss, xmlDoc);
-    addPosts(rss, xmlDoc);
-    state.data[rssLink] = rss;
+        };
+        postOrderArr.push(postLink);
+    });
+    return { postOrderArr, postsPool };
 };
 
-export const addReadPost = (rssLink, postLink) => {
-    watchedState.readPosts.push(postLink);
+export const addNewRssInState = (xmlDoc, rssLink) => {
+    state.data.feeds[rssLink] = parseFeed(xmlDoc);
+    const posts = parsePosts(xmlDoc);
+    Object.assign(state.data.posts, posts.postsPool);
+    state.ui.rssLinksOrder.push(rssLink);
+    state.ui.postsOrder[rssLink] = posts.postOrderArr;
+    console.log(state);
+    updateUI(state);
+};
+
+// export const addReadPost = (rssLink, postLink) => {
+//     watchedState.readPosts.push(postLink);
+// }
+//
+export const addNewPostsInState= (rssLink, postsLinksArr, xmlDoc) => {
+    xmlDoc.querySelectorAll('item').forEach(item => {
+        const itemLink =  item.querySelector('link')?.textContent;
+        if (postsLinksArr.includes(itemLink)) {
+            state.data.posts[itemLink] = {
+                title: item.querySelector('title')?.textContent || 'Нет заголовка',
+                description: item.querySelector('description').textContent || 'Нет описания',
+                link: itemLink,
+            }
+            state.ui.postsOrder[rssLink].unshift(itemLink);
+        }
+    })
+    updateUI(state);
 }

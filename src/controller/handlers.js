@@ -2,14 +2,15 @@ import validateURL from "./validateURL";
 import state from "../state/state";
 import fetchRSS from "./fetchRss";
 import parseXML from "./parseRSS";
-import throwIfInvalidRSS from "./validateRSS";
+import validateRss from "./validateRSS";
 import {addNewRssInState, addReadPost} from "../state/updateState";
 import {modalPreviewPost, updateFeedback, updateUI} from "../view/render";
 
 const addRSS = (xmlDoc, message, rssLink) => {
+    console.log('addRSS!!!');
     addNewRssInState(xmlDoc, rssLink);
     updateFeedback(message.type, message.message);
-    updateUI(state);
+    // updateUI(state);
 }
 
 export const submitHandler = (rssLink) => {
@@ -17,12 +18,12 @@ export const submitHandler = (rssLink) => {
         type: 'success',
         message: 'success.addRSS',
     }
-    validateURL.validate({url: rssLink}, { context: {feeds: state.links} })
+    validateURL.validate({url: rssLink}, { context: {feeds: state.ui.rssLinksOrder} })
     .then(() => fetchRSS(rssLink))
     .then((xmlString) => {
         const xmlDoc = parseXML(xmlString);
-        throwIfInvalidRSS(xmlDoc);
-        console.log(xmlDoc);
+        validateRss(xmlDoc);
+        // console.log(xmlDoc);
         return xmlDoc;
     })
     .then((xmlDoc) => {

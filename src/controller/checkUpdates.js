@@ -1,7 +1,7 @@
 import state from "../state/state";
 import fetchRSS from "./fetchRss";
 import parseXML from "./parseRSS";
-import {updatePosts} from "../state/updateState";
+import {addNewPostsInState} from "../state/updateState";
 import {globalIgnores} from "eslint/config";
 
 // const checkUpdates = () => {
@@ -31,28 +31,38 @@ export const checkUpdates = async () => {
 
     try {
         // Параллельно обрабатываем все RSS-ленты
-        await Promise.all(state.links.map(async (link) => {
+        await Promise.all(state.ui.rssLinksOrder.map(async (rssLink) => {
             try {
-                const xmlString = await fetchRSS(link); // Запрос к RSS
-                const xmlDoc = await parseXML(xmlString); // Парсинг XML
-                const items = Array.from(xmlDoc.querySelectorAll('item')); // Все посты
-
-                // Фильтруем новые посты (тех, которых нет в state.data[link].posts)
-                const newPosts = items.filter(item => {
+                const xmlString = await fetchRSS(rssLink);
+                const xmlDoc = await parseXML(xmlString);
+                const newPostLinksArr = [];
+                xmlDoc.querySelectorAll('item').forEach(item => {
                     const postLink = item.querySelector('link')?.textContent;
-                    return postLink && !state.data[link]?.posts.some(post => post.link === postLink);
-                });
+                    if (!(state.data.posts[postLink]?.link === postLink)) {
+                        newPostLinksArr.push(postLink);
+                    }
+                })
 
-                if (newPosts.length > 0) {
-                    updatePosts(link, xmlDoc); // Обновляем состояние
+                // const itemsXmlArr = Array.from(xmlDoc.querySelectorAll('item')); // Все посты
+                // console.log('itemsXmlArr', itemsXmlArr);
+                // // Фильтруем новые посты (тех, которых нет в state.data.posts)
+                // const newPostsXmlArr = itemsXmlArr.filter(item => {
+                //     const postLink = item.querySelector('link')?.textContent;
+                //     return item && !state.data.posts[postLink]?.link === postLink;
+                // });
+                // // console.log('newPostsXmlArr', newPostsXmlArr.length,  newPostsXmlArr);
+
+                if (newPostLinksArr.length > 0) {
+                    addNewPostsInState(rssLink, newPostLinksArr, xmlDoc); // Обновляем состояние
+                    console.log('Добавили новые посты!!!');
                 }
             } catch (error) {
-                console.error(`Ошибка для ${link}:`, error); // Логируем и игнорируем
+                console.error(`Fuck! Ошибка для ${rssLink}:`, error); // Логируем и игнорируем
             }
         }));
     } finally {
         isUpdating = false; // Снимаем блокировку
-        console.log('Обновление завершено');
+        console.log('checkUpdate!');
         setTimeout(checkUpdates, 5000); // Следующий запуск через 5 сек
     }
 };

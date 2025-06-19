@@ -3,7 +3,7 @@ import i18n from "../i18n/init.js";
 
 const fetchRSS = (url) => axios.get(`https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`)
     .then((response) => {
-        console.log('response.data: ', response.data);
+        // console.log('response.data: ', response.data);
         return response.data.contents;
     })
     .catch((error) => {

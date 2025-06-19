@@ -1,11 +1,6 @@
 import {previewBtnHandler, submitHandler} from "../controller/handlers";
 import state from "../state/state";
 
-const findPost = (postlink) => {
-    state.links.forEach((rss) => {
-        if (state.data[rss].posts) {}
-    })
-}
 export const initListeners = () => {
     //Add RSS Button:
     const form = document.getElementById('rss-form');
