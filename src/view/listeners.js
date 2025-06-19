@@ -19,10 +19,9 @@ export const initListeners = () => {
         const buttonPostPreview = event.target.closest('button');
         if (!buttonPostPreview) return;
         const postLink = buttonPostPreview.dataset.postLink;
-        console.log('state in listener:', state);
-        const currentPost = state.data[postLink];
-        console.log(postLink, currentPost);
-        previewBtnHandler(currentPost);
+        console.log('postLink:', postLink);
+        const currentPostData = state.data.posts[postLink];
+        previewBtnHandler(currentPostData);
     });
 }
 

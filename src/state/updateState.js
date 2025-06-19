@@ -40,10 +40,6 @@ export const addNewRssInState = (xmlDoc, rssLink) => {
     updateUI(state);
 };
 
-// export const addReadPost = (rssLink, postLink) => {
-//     watchedState.readPosts.push(postLink);
-// }
-//
 export const addNewPostsInState= (rssLink, postsLinksArr, xmlDoc) => {
     xmlDoc.querySelectorAll('item').forEach(item => {
         const itemLink =  item.querySelector('link')?.textContent;
@@ -57,4 +53,8 @@ export const addNewPostsInState= (rssLink, postsLinksArr, xmlDoc) => {
         }
     })
     updateUI(state);
+}
+
+export const addReadPostInState = (currentPostData) => {
+    state.ui.readPosts.push(currentPostData.link);
 }

@@ -23,20 +23,20 @@ export const updateUI = (state) => {
             const postLink = document.createElement('a');
             postLink.href = postData.link;
             postLink.textContent = postData.title;
-            postLink.target = '_blank'; // Открывать в новой вкладке
-            postLink.classList.add('text-decoration-none'); // Убираем подчёркивание (опционально)
+            postLink.target = '_blank';
+            postLink.classList.add('text-decoration-none');
 
             const postButton = document.createElement('button');
             postButton.classList.add('btn', 'btn-outline-primary', 'btn-sm');
             postButton.setAttribute('data-post-link', postData.link);
             postButton.textContent = 'Просмотр';
 
-            // if (state.ui.readPosts.includes(postData.link)) {
-            //     postLink.classList.add('text-muted');
-            //     postButton.classList.add('disabled');
-            // }
+            if (state.ui.readPosts.includes(postData.link)) {
+                postLink.classList.add('text-muted');
+                postButton.classList.add('disabled');
+            }
 
-            postItem.appendChild(postLink); // Добавляем ссылку вместо заголовка
+            postItem.appendChild(postLink);
             postItem.appendChild(postButton);
             posts.appendChild(postItem);
         })
@@ -50,29 +50,25 @@ export const updateFeedback = (type, message) => {
     feedback.classList.add(`text-${type}`);
 }
 
-export const modalPreviewPost = (post) => {
+export const modalRender = (currentPostData) => {
     const modalElement = document.getElementById('modalPreviewPost');
-    if (!modalElement || !post) {
-        return;
-    }
-
-    const modal = new Modal(modalElement); // Явное обращение к глобальному объекту
-
-    modalElement.querySelector('#modal-title').textContent = post.title;
-    modalElement.querySelector('#modal-description').textContent = post.description;
-
+    if (!modalElement || !currentPostData) return;
+    const modalTitle = modalElement.querySelector('#modal-title');
+    const modalDescription = modalElement.querySelector('#modal-description');
     const readMoreBtn = modalElement.querySelector('#btn-read-more');
-    if (readMoreBtn) readMoreBtn.href = post.link;
 
+    if (modalTitle) modalTitle.textContent = currentPostData.title || '';
+    if (modalDescription) modalDescription.textContent = currentPostData.description || '';
+
+
+    if (readMoreBtn) {
+        readMoreBtn.onclick = null;
+        readMoreBtn.onclick = () => {
+            if (currentPostData.link) {
+                window.open(currentPostData.link, '_blank'); // Открываем в новой вкладке
+            }
+        };
+    }
+    const modal = new Modal(modalElement);
     modal.show();
 };
-
-// setTimeout(() => {
-//     const modalElement = document.getElementById('modalPreviewPost');
-//     const modal = new Modal(modalElement); // Явное обращение к глобальному объекту
-//
-//     modalElement.querySelector('#modal-title').textContent = '123';
-//     modalElement.querySelector('#modal-description').textContent = 'qweqwewqewqe';
-//
-//     modal.show();
-// }, 2000);
