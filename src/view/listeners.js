@@ -6,7 +6,6 @@ export const initListeners = () => {
     const form = document.getElementById('rss-form');
     form.addEventListener('submit', (event) => {
         event.preventDefault();
-        console.log('кнопка нажата!');
         const rssInput = document.getElementById('rss-input');
         const rssValue = rssInput.value;
         submitHandler(rssValue);
@@ -15,11 +14,9 @@ export const initListeners = () => {
     //Preview post Buttons:
     const postList = document.getElementById('ulPosts');
     postList.addEventListener('click', (event) => {
-        console.log('кнопка просмотр!!!');
         const buttonPostPreview = event.target.closest('button');
         if (!buttonPostPreview) return;
         const postLink = buttonPostPreview.dataset.postLink;
-        console.log('postLink:', postLink);
         const currentPostData = state.data.posts[postLink];
         previewBtnHandler(currentPostData);
     });
