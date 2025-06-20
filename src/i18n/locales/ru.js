@@ -14,7 +14,7 @@ export default {
             // invalidUrl: 'Ссылка должна быть валидным URL',
             invalidUrl: 'Ссылка должна быть валидным URL',
             invalidRss: 'Ресурс не содержит валидный RSS',
-            invalidXml: 'RSS уже существует',
+            invalidXml: 'Ресурс не содержит валидный RSS',
             // invalidXml: 'RSS уже существует',
             // invalidXml: 'Не могу разобрать XML',
             network: 'Ошибка сети. Попробуйте позже.',
