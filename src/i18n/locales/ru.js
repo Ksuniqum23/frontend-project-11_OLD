@@ -11,7 +11,8 @@ export default {
         errors: {
             required: 'Ссылка обязательна',
             addRSS: 'RSS уже существует',
-            invalidUrl: 'Ссылка должна быть валидным URL',
+            // invalidUrl: 'Ссылка должна быть валидным URL',
+            invalidUrl: 'Ресурс не содержит валидный RSS',
             invalidRss: 'Ресурс не содержит валидный RSS',
             invalidXml: 'RSS уже существует',
             // invalidXml: 'Не могу разобрать XML',
