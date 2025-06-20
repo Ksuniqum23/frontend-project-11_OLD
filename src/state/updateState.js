@@ -1,5 +1,4 @@
 import state from "./state";
-import {watchedState} from "../index";
 import {updateUI} from "../view/render";
 
 const parseFeed = (xmlDoc) => {

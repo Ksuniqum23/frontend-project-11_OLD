@@ -2,14 +2,11 @@ import state from "../state/state";
 import fetchRSS from "./fetchRss";
 import parseXML from "./parseRSS";
 import {addNewPostsInState} from "../state/updateState";
-import {globalIgnores} from "eslint/config";
 
 let isUpdating = false;
-
 export const checkUpdates = async () => {
     if (isUpdating) return;
     isUpdating = true;
-
     try {
         await Promise.all(state.ui.rssLinksOrder.map(async (rssLink) => {
             try {

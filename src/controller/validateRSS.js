@@ -1,5 +1,5 @@
 const throwIfInvalidRSS = (xml) => {
-    //проверка на валидность XML "Не могу разобрать XML"
+
     const parseError = xml.querySelector('parsererror');
     if (parseError) {
         throw new Error('errors.invalidXml');
@@ -12,7 +12,3 @@ const throwIfInvalidRSS = (xml) => {
     }
 }
 export default throwIfInvalidRSS;
-
-//тут только выбрасывается error с ключом
-//А вот перевод этих ключей в человекочитаемый текст (i18next.t('errors.invalidXml'))
-// происходит в другом месте — там, где ты обрабатываешь .catch() и вызываешь renderFeedback.

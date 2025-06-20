@@ -7,10 +7,8 @@ import {addNewRssInState, addReadPost, addReadPostInState} from "../state/update
 import {modalRender, updateFeedback, updateUI} from "../view/render";
 
 const addRSS = (xmlDoc, message, rssLink) => {
-    console.log('addRSS!!!');
     addNewRssInState(xmlDoc, rssLink);
     updateFeedback(message.type, message.message);
-    // updateUI(state);
 }
 
 export const submitHandler = (rssLink) => {
@@ -23,7 +21,6 @@ export const submitHandler = (rssLink) => {
     .then((xmlString) => {
         const xmlDoc = parseXML(xmlString);
         validateRss(xmlDoc);
-        // console.log(xmlDoc);
         return xmlDoc;
     })
     .then((xmlDoc) => {
