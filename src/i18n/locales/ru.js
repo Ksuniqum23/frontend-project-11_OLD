@@ -6,7 +6,7 @@ export default {
             addButton: 'Добавить',
         },
         success: {
-            addRSS: 'RSS успешно добавлен',
+            addRSS: 'RSS успешно загружен',
         },
         errors: {
             required: 'Ссылка обязательна',
