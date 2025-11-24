@@ -5,5 +5,5 @@ import {checkUpdates} from "./controller/checkUpdates";
 
 document.addEventListener('DOMContentLoaded', () => {
     initListeners();
-    checkUpdates();
+    setTimeout(checkUpdates, 5000);
 });
