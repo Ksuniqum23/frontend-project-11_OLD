@@ -13,7 +13,7 @@ export default {
             addRSS: 'Этот RSS уже добавлен',
             invalidUrl: 'Ссылка должна быть валидным URL',
             invalidRss: 'Ресурс не содержит валидный RSS',
-            invalidXml: 'Не могу разобрать XML',
+            invalidXml: 'Ресурс не содержит валидный RSS',
             network: 'Ошибка сети. Попробуйте позже.',
         },
     },
