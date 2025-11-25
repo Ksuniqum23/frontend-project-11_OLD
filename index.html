@@ -1,84 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>RSS-agregator</title>
-</head>
-<body>
-
-    <main class="bg-dark text-white py-5 mb-4">
-        <div class="container">
-            <h1 class="display-4">RSS-агрегатор</h1>
-            <p class="lead">Начните читать RSS сегодня! Это легко, это красиво.</p>
-            <form class="row g-2 align-items-center" id="rss-form">
-                <div class="col">
-                    <input
-                            id="rss-input"
-                            autofocus=""
-                            required=""
-                            name="url"
-                            aria-label="url"
-                            class="form-control w-100"
-                            placeholder="Введите RSS-ссылку"
-                            autocomplete="off">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Frontend project</title>
+  </head>
+  <body>
+    <main class="flex-grow-1">
+      <section class="container-fluid bg-dark p-5">
+        <div class="col-md-10 col-lg-8 mx-auto text-white">
+          <h1 class="display-3 mb-0">RSS агрегатор</h1>
+          <p class="lead">Начните читать RSS сегодня! Это легко, это красиво.</p>
+          <form action class="rss-form text-body">
+            <div class="row">
+              <div class="col">
+                <div class="form-floating">
+                  <input type="" aria-label="url" name="url" autofocus required class="form-control w-100" autocomplete="off" placeholder="Ссылка RSS" id="url-input">
+                  <label for="url-input">Ссылка RSS</label>
                 </div>
-                <div class="col-auto">
-                    <button
-                            type="submit"
-                            aria-label="add"
-                            class="h-100 btn btn-lg btn-primary px-sm-5">Добавить
-                    </button>
-                </div>
-            </form>
-            <p class="mt-2 mb-0 text-small">Пример: https://lorem-rss.hexlet.app/feed</p>
-            <p class="mt-2 mb-0 text-small">Пример: http://feeds.bbci.co.uk/news/rss.xml</p>
-            <p class="mt-2 mb-0 text-small">Пример: https://www.nasa.gov/feeds/iotd-feed</p>
-            <p class="feedback m-0 position-absolute small text-success">Пока нет фидбека</p>
-        </div>
-    </main>
-
-<!--    <div    class="container mb-5">-->
-<!--        <h1>123123</h1>-->
-<!--        -->
-<!--    </div>-->
-
-    <div id="app"></div>
-
-    <section class="container">
-        <div class="row gx-4 mx-n2">
-            <div class="bg-white border rounded shadow-sm p-4 col mx-2">
-                <h2 class="h5">Фиды:</h2>
-                <ul class="list-group list-group-flush" id="ulFeeds">
-                    <!-- сюда будут добавляться элементы -->
-                </ul>
+              </div>
+              <div class="col-auto">
+                <button type="submit" area-label="add" class="h-100 btn btn-lg btn-primary px-sm-5">Добавить</button>
+              </div>
             </div>
-            <div class="bg-white border rounded shadow-sm p-4 col mx-2">
-                <h2 class="h5">Посты:</h2>
-                <ul class="list-group list-group-flush mt-3" id="ulPosts">
-                    <!-- сюда будут добавляться элементы -->
-                </ul>
-            </div>
+            <div id="message" class="mt-2"></div>
+          </form>
         </div>
-    </section>
-
-    <div class="modal" tabindex="-1" id="modalPreviewPost">
+      </section>
+      <section class="container container-fluid mt-3">
+        <div class="row">
+          <div class="col-md-8">      
+            <div class="posts">
+              <h2>Посты</h2>
+              <ul class="list-group" id="posts-list"></ul>
+            </div>
+          </div>
+          <div class="col-md-4">      
+            <div class="feeds">
+              <h2>Фиды</h2>
+              <ul class="list-group" id="feeds-list"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="modal-description"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btn-read-more">Читать полностью</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                </div>
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+              <p></p>
+            </div>
+            <div class="modal-footer">
+              <a href="#" class="btn btn-primary full-article" target="_blank" rel="noopener noreferrer">Читать полностью</a>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+          </div>
         </div>
-    </div>
-
-
-</body>
+      </div>
+    </main>
+  </body>
 </html>
+

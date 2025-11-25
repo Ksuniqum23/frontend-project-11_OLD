@@ -1,54 +1,52 @@
-const path = require('path'); //Импортирует встроенный модуль Node.js path
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-// плагин автоматически создает HTML-файл, подключающий ваш собранный JavaScript, и вставляет его в проект
-// const webpack = require('webpack');
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
-module.exports = {
-    entry: './src/index.js', // Точка входа
-    output: {
-        path: path.resolve(__dirname), // Куда класть результат
-        filename: 'bundle.js', // Имя итогового JS-файла
-        clean: true, // Очищать dist перед сборкой
-    },
-    module: {
-        rules: [
-            {
-                test: /\.css$/i, // Все CSS-файлы
-                use: ['style-loader', 'css-loader'], // Загрузчики для CSS
-            },
-        ],
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            // template: 'index.html', // HTML-шаблон
-            template: path.resolve(__dirname, 'index.html'),
-            filename: 'index.html',   // имя итогового файла
-            inject: 'body',           // подключать скрипты перед </body>
-        }),
-        // new webpack.ProvidePlugin({
-        //     bootstrap: 'bootstrap/dist/js/bootstrap.bundle.min.js',
-        // }),
-    ],
-    mode: 'development', // Или 'production' для финальной сборки
-    devServer: {
-        allowedHosts: 'auto',
-        static: {
-            directory: path.resolve(__dirname), // пусть следит за всем проектом
-            watch: true,
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
+  mode: process.env.NODE_ENV || 'development',
+  entry: './src/js/main.js',
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
         },
-        compress: true,      // сжатие
-        port: 3000,           // любой свободный порт
-        open: true,           // откроет браузер автоматически
-        hot: true,            // обновляет только изменённые модули
-        liveReload: true,
-        watchFiles: {
-            paths: [path.resolve(__dirname, 'index.html')],
-            options: {
-                usePolling: true,
-            },
-        }
-    },
-    // externals: {
-    //     bootstrap: 'bootstrap'
-    // }
+      },
+      { test: /\.css$/, use: ['style-loader', 'css-loader', 'postcss-loader'] },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader'],
+      },
+      {
+        test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: 'url-loader?limit=10000',
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+        use: 'file-loader',
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+    }),
+  ],
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  devServer: {
+    static: path.resolve(__dirname, 'dist'),
+    port: 8080,
+    hot: true,
+  },
 };
