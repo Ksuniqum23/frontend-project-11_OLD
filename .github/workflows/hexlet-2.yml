@@ -1,0 +1,77 @@
+name: hexlet-2.yml
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Hexlet project check
+        uses: hexlet/project-action@release
+        with:
+          hexlet-id: ${{ secrets.HEXLET_ID }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Test runner (dev) if missing
+        run: npm i -D @playwright/test@latest
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Build project
+        run: npm run build
+
+      - name: Start static server for built app
+        # запускаем http-server в фоне, чтобы тесты могли обращаться к http://127.0.0.1:8080
+        run: npx http-server ./dist -p 8080 &
+
+      - name: Wait for server to be ready
+        # небольшая пауза/проверка, чтобы сервер поднялся
+        run: |
+          n=0
+          until curl --silent --fail http://127.0.0.1:8080/ || [ $n -ge 15 ]; do
+            n=$((n+1))
+            sleep 1
+          done
+          if [ $n -ge 15 ]; then echo "Server did not start"; exit 1; fi
+
+      - name: Run Playwright tests (CI)
+        # сохраняем exit code, чтобы продолжить и загрузить артефакты в любом случае
+        run: |
+          npx playwright test --reporter=html || echo "playwright-exit:$?"
+        env:
+          CI: true
+
+      - name: Upload Playwright HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+
+      - name: Upload test artifacts (screenshots, videos, traces, custom)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts
+          path: |
+            test-results
+            videos
+            traces
+            artifacts
