@@ -9,6 +9,7 @@ import {modalRender, updateFeedback, updateUI} from "../view/render";
 const addRSS = (xmlDoc, message, rssLink) => {
     addNewRssInState(xmlDoc, rssLink);
     updateFeedback(message.type, message.message);
+    document.getElementById('rss-input').value = '';
 }
 
 export const submitHandler = (rssLink) => {
